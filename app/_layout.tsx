@@ -1,0 +1,24 @@
+// app/_layout.tsx
+import React from 'react';
+import { Stack } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { useLanguageProvider, LanguageContext } from '../src/hooks/useLanguage';
+import { Colors } from '../src/constants/theme';
+
+export default function RootLayout() {
+  const { language, setLanguage, t, loaded } = useLanguageProvider();
+
+  if (!loaded) return null;
+
+  return (
+    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+      <SafeAreaProvider>
+        <StatusBar style="light" backgroundColor={Colors.background} />
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        </Stack>
+      </SafeAreaProvider>
+    </LanguageContext.Provider>
+  );
+}

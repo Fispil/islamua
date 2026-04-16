@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Islam UA — Асоціація мусульман України -->
+<!-- Developer: Maksym Storozhuk -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/widget_background"
+    android:padding="16dp">
+
+    <!-- Top row: live dot + label -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="6dp">
+        <ImageView
+            android:id="@+id/liveDot"
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:background="@drawable/live_dot"
+            android:layout_marginEnd="7dp" />
+        <TextView
+            android:id="@+id/labelNextPrayer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="НАСТУПНА МОЛИТВА"
+            android:textSize="8sp"
+            android:textColor="#9DB4CC"
+            android:letterSpacing="0.1"
+            android:fontFamily="sans-serif-medium" />
+    </LinearLayout>
+
+    <!-- Arabic name -->
+    <TextView
+        android:id="@+id/arabicName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="الفجر"
+        android:textSize="19sp"
+        android:textColor="#F0C860"
+        android:layout_marginBottom="1dp" />
+
+    <!-- Prayer name + time on same row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="8dp">
+        <TextView
+            android:id="@+id/prayerName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Фаджр"
+            android:textSize="26sp"
+            android:textColor="#F0F7FF"
+            android:textStyle="bold"
+            android:fontFamily="serif" />
+        <TextView
+            android:id="@+id/prayerTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="05:39"
+            android:textSize="26sp"
+            android:textColor="#F0F7FF"
+            android:fontFamily="sans-serif-light"
+            android:letterSpacing="-0.04" />
+    </LinearLayout>
+
+    <!-- Countdown pill -->
+    <LinearLayout
+        android:id="@+id/countdownPill"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/countdown_pill"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_marginBottom="10dp">
+        <ImageView
+            android:layout_width="11dp"
+            android:layout_height="11dp"
+            android:src="@drawable/ic_timer"
+            android:layout_marginEnd="5dp" />
+        <TextView
+            android:id="@+id/countdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="8г 49хв"
+            android:textSize="11sp"
+            android:textColor="#F0C860"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" залишилось"
+            android:textSize="9sp"
+            android:textColor="#9DB4CC" />
+    </LinearLayout>
+
+    <!-- Progress bar -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:progressDrawable="@drawable/progress_bar_gold"
+        android:progress="22"
+        android:max="100"
+        android:layout_marginBottom="4dp" />
+
+    <!-- From / To labels -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/fromLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Іша (20:49)"
+            android:textSize="8sp"
+            android:textColor="#9DB4CC" />
+        <TextView
+            android:id="@+id/toLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Фаджр (05:39)"
+            android:textSize="8sp"
+            android:textColor="#9DB4CC"
+            android:gravity="end" />
+    </LinearLayout>
+
+</LinearLayout>
