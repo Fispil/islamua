@@ -8,11 +8,13 @@
     "scheme": "islamua",
     "userInterfaceStyle": "dark",
     "newArchEnabled": true,
+
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#0D1B2A"
     },
+
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.maksymstorozhuk.islamua",
@@ -21,12 +23,10 @@
         "NSLocationWhenInUseUsageDescription": "Islam UA використовує ваше місцезнаходження для розрахунку точного часу молитов та напрямку Кібли.",
         "NSLocationAlwaysAndWhenInUseUsageDescription": "Islam UA використовує ваше місцезнаходження для надання точного часу молитов.",
         "NSLocationAlwaysUsageDescription": "Islam UA використовує ваше місцезнаходження для часу молитов у фоновому режимі.",
-        "UIBackgroundModes": [
-          "fetch",
-          "remote-notification"
-        ]
+        "UIBackgroundModes": ["fetch", "remote-notification"]
       }
     },
+
     "android": {
       "package": "com.maksymstorozhuk.islamua",
       "versionCode": 1,
@@ -45,11 +45,13 @@
         "android.permission.INTERNET"
       ]
     },
+
     "web": {
       "bundler": "metro",
       "output": "static",
       "favicon": "./assets/images/favicon.png"
     },
+
     "plugins": [
       "expo-router",
       [
@@ -63,24 +65,32 @@
         {
           "icon": "./assets/images/notification-icon.png",
           "color": "#D4A843",
-          "sounds": [
-            "./assets/audio/adhan.mp3"
-          ]
+          "sounds": ["./assets/audio/adhan.mp3"]
         }
-      ]
+      ],
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "buildReactNativeFromSource": true,
+            "deploymentTarget": "15.1"
+          }
+        }
+      ],
+      "./plugins/withPrayerWidget"
     ],
+
     "experiments": {
       "typedRoutes": true
     },
+
     "extra": {
       "appName": "Islam UA",
       "author": "Maksym Storozhuk",
       "organization": "Асоціація мусульман України",
       "eas": {
         "projectId": "2704fb21-8aab-4fac-ad9e-fc299ecd134b"
-      },
-      "router": {}
-    },
-    "owner": "islam-ua-organization"
+      }
+    }
   }
 }

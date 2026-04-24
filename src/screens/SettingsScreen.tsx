@@ -1,9 +1,9 @@
 // src/screens/SettingsScreen.tsx
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Switch, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Switch, Alert, AppState } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Notifications from 'expo-notifications';
-import { loadSettings, enableNotifications, disableNotifications, togglePrayerNotif } from '../services/notificationServiceOld';
+import { loadSettings, enableNotifications, disableNotifications, togglePrayerNotif } from '../services/notificationService';
 import { usePrayerTimes } from '../hooks/usePrayerTimes';
 import { useTranslation, useLanguage } from '../hooks/useLanguage';
 import { ArabicText } from '../components/ui';
@@ -29,8 +29,25 @@ export default function SettingsScreen() {
     { id:1, label:t('karachi') },
   ];
 
+    // Load on mount
   useEffect(() => {
-    loadSettings().then(s => { setMasterEnabled(s.masterEnabled); setPrayerToggles(s.prayers); });
+    loadSettings().then(s => {
+      setMasterEnabled(s.masterEnabled);
+      setPrayerToggles(s.prayers);
+    });
+  }, []);
+
+  // Re-read whenever screen comes back into focus (e.g. toggled from HomeScreen)
+  useEffect(() => {
+    const sub = AppState.addEventListener('change', (state) => {
+      if (state === 'active') {
+        loadSettings().then(s => {
+          setMasterEnabled(s.masterEnabled);
+          setPrayerToggles(s.prayers);
+        });
+      }
+    });
+    return () => sub.remove();
   }, []);
 
   async function handleMasterToggle(val: boolean) {

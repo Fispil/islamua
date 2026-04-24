@@ -10,6 +10,8 @@ interface Props { prayer:Prayer; isNext:boolean; notifEnabled:boolean; showToggl
 
 export default function PrayerTile({ prayer, isNext, notifEnabled, showToggle, onToggle }: Props) {
   const iconColor = isNext ? Colors.gold : prayer.hasPassed ? Colors.textMuted : Colors.textSecondary;
+  const isFajr = prayer.name === 'Fajr';
+  
   return (
     <View style={[styles.container, isNext && styles.containerNext, prayer.hasPassed && !isNext && styles.containerPassed]}>
       {isNext && <View style={styles.accentBar} />}
@@ -35,7 +37,7 @@ const styles = StyleSheet.create({
   containerNext: { backgroundColor:'#1e3050', borderColor:Colors.goldBorder, paddingLeft:15 },
   containerPassed: { opacity:0.55 },
   accentBar: { position:'absolute', left:0, top:0, bottom:0, width:3, backgroundColor:Colors.gold, borderTopLeftRadius:Radius.lg, borderBottomLeftRadius:Radius.lg },
-  iconBox: { width:44, height:44, borderRadius:12, backgroundColor:'rgba(201,168,76,0.07)', borderWidth:0.5, borderColor:Colors.borderSoft, alignItems:'center', justifyContent:'center' },
+  iconBox: { width:44, height:60, borderRadius:12, backgroundColor:'rgba(201,168,76,0.07)', borderWidth:0.5, borderColor:Colors.borderSoft, alignItems:'center', justifyContent:'center' },
   iconBoxNext: { backgroundColor:'rgba(201,168,76,0.15)', borderColor:Colors.goldBorder },
   nameBlock: { flex:1, gap:1 },
   nameRow: { flexDirection:'row', alignItems:'center', gap:8 },

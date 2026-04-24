@@ -293,7 +293,7 @@ export const translations = {
     notifAdhanTitle: 'Молитва',
     notifAdhanBody: 'Настав час молитви.',
     notifReminderTitle: 'через 15 хвилин',
-    notifReminderBody: 'молитва починається о',
+    notifReminderBody: 'Молитва починається о',
     notifTimeToPrepare: 'Час підготуватись.',
   },
 } as const;

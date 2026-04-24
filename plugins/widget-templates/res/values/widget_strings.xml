@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_label">Islam UA</string>
+    <string name="widget_description">Наступна молитва · Islam UA</string>
+    <string name="calendar_widget_label">Islam UA Календар</string>
+    <string name="calendar_widget_description">Всі молитви сьогодні · Islam UA</string>
+    <string name="widget_next_prayer">НАСТУПНА МОЛИТВА</string>
+    <string name="widget_remaining"> залишилось</string>
+</resources>
