@@ -8,13 +8,13 @@
     android:padding="16dp"
     android:theme="@style/Theme.AppWidget.IslamUA">
 
-    <!-- Header: city + hijri date -->
+    <!-- Header: city + hijri -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="8dp">
         <TextView
             android:id="@+id/calendarCity"
             android:layout_width="0dp"
@@ -28,38 +28,34 @@
             android:id="@+id/calendarHijri"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="14 رمضان"
+            android:text=""
             android:textSize="11sp"
             android:textColor="#D4A843" />
     </LinearLayout>
 
-    <!-- Divider -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#22D4A843"
-        android:layout_marginBottom="8dp" />
-
-    <!-- Row 1: Fajr -->
+    <!-- Row 1 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="horizontal"
-        android:gravity="center_vertical">
-        <View
+        android:gravity="center_vertical"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp">
+        <ImageView
             android:id="@+id/row1Indicator"
             android:layout_width="6dp"
             android:layout_height="6dp"
-            android:background="@drawable/live_dot"
-            android:layout_marginEnd="8dp" />
+            android:src="@drawable/live_dot"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="@null" />
         <TextView
             android:id="@+id/row1Name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.2"
             android:text="Фаджр"
-            android:textSize="14sp"
+            android:textSize="13sp"
             android:textStyle="bold"
             android:textColor="#F0F7FF" />
         <TextView
@@ -68,38 +64,41 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="الفجر"
-            android:textSize="13sp"
+            android:textSize="12sp"
             android:textColor="#9DB4CC" />
         <TextView
             android:id="@+id/row1Time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="05:39"
-            android:textSize="15sp"
+            android:text="—"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="#F0F7FF" />
     </LinearLayout>
 
-    <!-- Row 2: Dhuhr -->
+    <!-- Row 2 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="horizontal"
-        android:gravity="center_vertical">
-        <View
+        android:gravity="center_vertical"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp">
+        <ImageView
             android:id="@+id/row2Indicator"
             android:layout_width="6dp"
             android:layout_height="6dp"
-            android:background="@drawable/live_dot"
-            android:layout_marginEnd="8dp" />
+            android:src="@drawable/live_dot"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="@null" />
         <TextView
             android:id="@+id/row2Name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.2"
             android:text="Зухр"
-            android:textSize="14sp"
+            android:textSize="13sp"
             android:textStyle="bold"
             android:textColor="#F0F7FF" />
         <TextView
@@ -108,38 +107,41 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="الظهر"
-            android:textSize="13sp"
+            android:textSize="12sp"
             android:textColor="#9DB4CC" />
         <TextView
             android:id="@+id/row2Time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="12:32"
-            android:textSize="15sp"
+            android:text="—"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="#F0F7FF" />
     </LinearLayout>
 
-    <!-- Row 3: Asr -->
+    <!-- Row 3 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="horizontal"
-        android:gravity="center_vertical">
-        <View
+        android:gravity="center_vertical"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp">
+        <ImageView
             android:id="@+id/row3Indicator"
             android:layout_width="6dp"
             android:layout_height="6dp"
-            android:background="@drawable/live_dot"
-            android:layout_marginEnd="8dp" />
+            android:src="@drawable/live_dot"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="@null" />
         <TextView
             android:id="@+id/row3Name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.2"
             android:text="Аср"
-            android:textSize="14sp"
+            android:textSize="13sp"
             android:textStyle="bold"
             android:textColor="#F0F7FF" />
         <TextView
@@ -148,38 +150,41 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="العصر"
-            android:textSize="13sp"
+            android:textSize="12sp"
             android:textColor="#9DB4CC" />
         <TextView
             android:id="@+id/row3Time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="16:18"
-            android:textSize="15sp"
+            android:text="—"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="#F0F7FF" />
     </LinearLayout>
 
-    <!-- Row 4: Maghrib -->
+    <!-- Row 4 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="horizontal"
-        android:gravity="center_vertical">
-        <View
+        android:gravity="center_vertical"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp">
+        <ImageView
             android:id="@+id/row4Indicator"
             android:layout_width="6dp"
             android:layout_height="6dp"
-            android:background="@drawable/live_dot"
-            android:layout_marginEnd="8dp" />
+            android:src="@drawable/live_dot"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="@null" />
         <TextView
             android:id="@+id/row4Name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.2"
             android:text="Магріб"
-            android:textSize="14sp"
+            android:textSize="13sp"
             android:textStyle="bold"
             android:textColor="#F0F7FF" />
         <TextView
@@ -188,38 +193,41 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="المغرب"
-            android:textSize="13sp"
+            android:textSize="12sp"
             android:textColor="#9DB4CC" />
         <TextView
             android:id="@+id/row4Time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="19:44"
-            android:textSize="15sp"
+            android:text="—"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="#F0F7FF" />
     </LinearLayout>
 
-    <!-- Row 5: Isha -->
+    <!-- Row 5 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="horizontal"
-        android:gravity="center_vertical">
-        <View
+        android:gravity="center_vertical"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp">
+        <ImageView
             android:id="@+id/row5Indicator"
             android:layout_width="6dp"
             android:layout_height="6dp"
-            android:background="@drawable/live_dot"
-            android:layout_marginEnd="8dp" />
+            android:src="@drawable/live_dot"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="@null" />
         <TextView
             android:id="@+id/row5Name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.2"
             android:text="Іша"
-            android:textSize="14sp"
+            android:textSize="13sp"
             android:textStyle="bold"
             android:textColor="#F0F7FF" />
         <TextView
@@ -228,14 +236,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="العشاء"
-            android:textSize="13sp"
+            android:textSize="12sp"
             android:textColor="#9DB4CC" />
         <TextView
             android:id="@+id/row5Time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="21:12"
-            android:textSize="15sp"
+            android:text="—"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="#F0F7FF" />
     </LinearLayout>

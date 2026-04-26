@@ -9,6 +9,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.util.Log
+import android.view.View
 import android.widget.RemoteViews
 import org.json.JSONObject
 
@@ -45,7 +46,10 @@ class PrayerCalendarWidget : AppWidgetProvider() {
                 scheduleNextUpdate(context)
                 updateAllWidgets(context)
             }
-            ACTION_TICK -> updateAllWidgets(context)
+            ACTION_TICK -> {
+                updateAllWidgets(context)
+                scheduleNextUpdate(context)
+            }
         }
     }
 
@@ -59,29 +63,36 @@ class PrayerCalendarWidget : AppWidgetProvider() {
         fun scheduleNextUpdate(context: Context) {
             try {
                 val am = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-                val intent = Intent(context, PrayerCalendarWidget::class.java).apply {
-                    action = ACTION_TICK
-                }
+                val intent = Intent(context, PrayerCalendarWidget::class.java).apply { action = ACTION_TICK }
                 val pi = PendingIntent.getBroadcast(
                     context, REQUEST_CODE, intent,
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
                 )
-                val now = System.currentTimeMillis()
-                val nextMinute = now + (60_000 - now % 60_000)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    am.setExactAndAllowWhileIdle(AlarmManager.RTC, nextMinute, pi)
-                } else {
-                    am.setExact(AlarmManager.RTC, nextMinute, pi)
+                // Calendar widget refreshes every 5 minutes — no need for per-second updates
+                val nextTick = System.currentTimeMillis() + 5 * 60_000
+
+                when {
+                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+                        if (am.canScheduleExactAlarms()) {
+                            am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, nextTick, pi)
+                        } else {
+                            am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, nextTick, pi)
+                        }
+                    }
+                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> {
+                        am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, nextTick, pi)
+                    }
+                    else -> {
+                        am.setExact(AlarmManager.RTC_WAKEUP, nextTick, pi)
+                    }
                 }
-            } catch (e: Exception) { Log.e(TAG, "scheduleNextUpdate failed", e) }
+            } catch (_: Exception) {}
         }
 
         fun cancelAlarm(context: Context) {
             try {
                 val am = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-                val intent = Intent(context, PrayerCalendarWidget::class.java).apply {
-                    action = ACTION_TICK
-                }
+                val intent = Intent(context, PrayerCalendarWidget::class.java).apply { action = ACTION_TICK }
                 val pi = PendingIntent.getBroadcast(
                     context, REQUEST_CODE, intent,
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
@@ -93,9 +104,7 @@ class PrayerCalendarWidget : AppWidgetProvider() {
         fun updateAllWidgets(context: Context) {
             try {
                 val mgr = AppWidgetManager.getInstance(context)
-                val ids = mgr.getAppWidgetIds(
-                    ComponentName(context, PrayerCalendarWidget::class.java)
-                )
+                val ids = mgr.getAppWidgetIds(ComponentName(context, PrayerCalendarWidget::class.java))
                 for (id in ids) updateAppWidget(context, mgr, id)
             } catch (e: Exception) { Log.e(TAG, "updateAllWidgets failed", e) }
         }
@@ -112,30 +121,25 @@ class PrayerCalendarWidget : AppWidgetProvider() {
                         val cityName = d.optString("city", "")
                         val hijriDay = d.optString("hijriDay", "")
                         val hijriMonth = d.optString("hijriMonth", "")
-                        val nextPrayerName = d.optString("nextPrayerName", "")
 
-                        views.setTextViewText(R.id.calendarCity, cityName.ifEmpty { "—" })
+                        views.setTextViewText(R.id.calendarCity, cityName.ifEmpty { "Islam UA" })
                         val hijriText = if (hijriDay.isNotEmpty()) "$hijriDay $hijriMonth" else ""
                         views.setTextViewText(R.id.calendarHijri, hijriText)
 
-                        // Prayers array: [{name, arabic, time, isNext, hasPassed}, ...]
                         val prayers = d.optJSONArray("prayers")
                         if (prayers != null && prayers.length() >= 5) {
-                            renderPrayerRow(views,
-                                R.id.row1Name, R.id.row1Arabic, R.id.row1Time, R.id.row1Indicator,
-                                prayers.getJSONObject(0))
-                            renderPrayerRow(views,
-                                R.id.row2Name, R.id.row2Arabic, R.id.row2Time, R.id.row2Indicator,
-                                prayers.getJSONObject(1))
-                            renderPrayerRow(views,
-                                R.id.row3Name, R.id.row3Arabic, R.id.row3Time, R.id.row3Indicator,
-                                prayers.getJSONObject(2))
-                            renderPrayerRow(views,
-                                R.id.row4Name, R.id.row4Arabic, R.id.row4Time, R.id.row4Indicator,
-                                prayers.getJSONObject(3))
-                            renderPrayerRow(views,
-                                R.id.row5Name, R.id.row5Arabic, R.id.row5Time, R.id.row5Indicator,
-                                prayers.getJSONObject(4))
+                            val rowIds = listOf(
+                                Triple(R.id.row1Name, R.id.row1Arabic, R.id.row1Time) to R.id.row1Indicator,
+                                Triple(R.id.row2Name, R.id.row2Arabic, R.id.row2Time) to R.id.row2Indicator,
+                                Triple(R.id.row3Name, R.id.row3Arabic, R.id.row3Time) to R.id.row3Indicator,
+                                Triple(R.id.row4Name, R.id.row4Arabic, R.id.row4Time) to R.id.row4Indicator,
+                                Triple(R.id.row5Name, R.id.row5Arabic, R.id.row5Time) to R.id.row5Indicator
+                            )
+                            for (i in 0 until 5) {
+                                val (texts, indicator) = rowIds[i]
+                                renderPrayerRow(views, texts.first, texts.second, texts.third, indicator,
+                                    prayers.getJSONObject(i))
+                            }
                         } else {
                             setCalendarPlaceholder(views)
                         }
@@ -147,7 +151,6 @@ class PrayerCalendarWidget : AppWidgetProvider() {
                     setCalendarPlaceholder(views)
                 }
 
-                // Tap to open app
                 try {
                     val intent = Intent(context, MainActivity::class.java).apply {
                         flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -178,14 +181,11 @@ class PrayerCalendarWidget : AppWidgetProvider() {
             views.setTextViewText(arabicId, arabic)
             views.setTextViewText(timeId, time)
 
-            // Colours:
-            //  isNext    → gold (#F0C860)
-            //  hasPassed → muted (#6B7E94)
-            //  future    → white (#F0F7FF)
+            // Colours via setTextColor (RemoteViews-safe API)
             val color = when {
-                isNext    -> 0xFFF0C860.toInt()
-                hasPassed -> 0xFF6B7E94.toInt()
-                else      -> 0xFFF0F7FF.toInt()
+                isNext    -> 0xFFF0C860.toInt()  // gold for next
+                hasPassed -> 0xFF6B7E94.toInt()  // muted for past
+                else      -> 0xFFF0F7FF.toInt()  // white for future
             }
             views.setTextColor(nameId, color)
             views.setTextColor(timeId, color)
@@ -193,35 +193,35 @@ class PrayerCalendarWidget : AppWidgetProvider() {
                 if (isNext) 0xFFF0C860.toInt() else 0xFF9DB4CC.toInt()
             )
 
-            // Green dot indicator for next prayer
-            views.setViewVisibility(indicatorId,
-                if (isNext) android.view.View.VISIBLE else android.view.View.INVISIBLE
-            )
+            // Show/hide indicator dot — INVISIBLE keeps space, GONE removes
+            views.setViewVisibility(indicatorId, if (isNext) View.VISIBLE else View.INVISIBLE)
         }
 
         private fun setCalendarPlaceholder(views: RemoteViews) {
             views.setTextViewText(R.id.calendarCity, "Islam UA")
             views.setTextViewText(R.id.calendarHijri, "Відкрийте додаток")
-            val empty = arrayOf(
-                Triple(R.id.row1Name, R.id.row1Arabic, R.id.row1Time),
-                Triple(R.id.row2Name, R.id.row2Arabic, R.id.row2Time),
-                Triple(R.id.row3Name, R.id.row3Arabic, R.id.row3Time),
-                Triple(R.id.row4Name, R.id.row4Arabic, R.id.row4Time),
-                Triple(R.id.row5Name, R.id.row5Arabic, R.id.row5Time)
+
+            val rowData = listOf(
+                Triple("Фаджр",  "الفجر",  R.id.row1Name to R.id.row1Arabic) to R.id.row1Time,
+                Triple("Зухр",   "الظهر",  R.id.row2Name to R.id.row2Arabic) to R.id.row2Time,
+                Triple("Аср",    "العصر",  R.id.row3Name to R.id.row3Arabic) to R.id.row3Time,
+                Triple("Магріб", "المغرب", R.id.row4Name to R.id.row4Arabic) to R.id.row4Time,
+                Triple("Іша",    "العشاء", R.id.row5Name to R.id.row5Arabic) to R.id.row5Time
             )
-            val names = arrayOf("Фаджр", "Зухр", "Аср", "Магріб", "Іша")
-            val arabics = arrayOf("الفجر", "الظهر", "العصر", "المغرب", "العشاء")
-            empty.forEachIndexed { i, ids ->
-                views.setTextViewText(ids.first, names[i])
-                views.setTextViewText(ids.second, arabics[i])
-                views.setTextViewText(ids.third, "—")
+            val indicators = listOf(
+                R.id.row1Indicator, R.id.row2Indicator, R.id.row3Indicator,
+                R.id.row4Indicator, R.id.row5Indicator
+            )
+            for (i in rowData.indices) {
+                val (data, timeId) = rowData[i]
+                val (name, arabic, ids) = data
+                views.setTextViewText(ids.first, name)
+                views.setTextViewText(ids.second, arabic)
+                views.setTextViewText(timeId, "—")
                 views.setTextColor(ids.first, 0xFF6B7E94.toInt())
-                views.setTextColor(ids.third, 0xFF6B7E94.toInt())
+                views.setTextColor(timeId, 0xFF6B7E94.toInt())
                 views.setTextColor(ids.second, 0xFF9DB4CC.toInt())
-            }
-            arrayOf(R.id.row1Indicator, R.id.row2Indicator, R.id.row3Indicator,
-                    R.id.row4Indicator, R.id.row5Indicator).forEach {
-                views.setViewVisibility(it, android.view.View.INVISIBLE)
+                views.setViewVisibility(indicators[i], View.INVISIBLE)
             }
         }
     }
