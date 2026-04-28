@@ -1,6 +1,7 @@
 // ios/islamua/SharedGroupPreferences.swift
-// React Native → App Group UserDefaults bridge.
-// Lets JS write prayer data that the WidgetKit extension reads.
+// React Native ↔ App Group UserDefaults bridge.
+// JS calls SharedGroupPreferences.setItem(key, json, group) →
+// data lands in App Group UserDefaults → WidgetKit extension reads it.
 
 import Foundation
 import WidgetKit

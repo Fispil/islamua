@@ -11,6 +11,7 @@
 
     "splash": {
       "image": "./assets/images/splash.png",
+      "imageWidth": 200,
       "resizeMode": "contain",
       "backgroundColor": "#0D1B2A"
     },

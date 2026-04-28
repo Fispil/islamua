@@ -1,3 +1,6 @@
+// ios/islamua/SharedGroupPreferences.m
+// Bridges Swift module to React Native module registry.
+
 #import <React/RCTBridgeModule.h>
 
 @interface RCT_EXTERN_MODULE(SharedGroupPreferences, NSObject)
