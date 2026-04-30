@@ -28,12 +28,6 @@ export default function WidgetsGrid({ prayers, dayData, location, countdown, pro
     <View style={styles.container}>
       <SectionLabel text={t('widgets')} />
 
-      {nextPrayer && (
-        <View style={styles.fullWidth}>
-          <NextPrayerWidget nextPrayer={nextPrayer} countdown={countdown} progress={progress} />
-        </View>
-      )}
-
       <View style={styles.grid}>
         {/* Qibla */}
         <View style={styles.widget}>
@@ -102,10 +96,10 @@ function QiblaCompass({ angle }: { angle: number }) {
 }
 
 const styles = StyleSheet.create({
-  container: { paddingTop:8, paddingBottom:16 },
+  container: { paddingTop:8, paddingBottom:16},
   fullWidth: { paddingHorizontal:Spacing.lg, marginBottom:10 },
-  grid: { flexDirection:'row', flexWrap:'wrap', paddingHorizontal:Spacing.lg, gap:10 },
-  widget: { flex:1, minWidth:'47%', maxWidth:'47%', backgroundColor:Colors.card, borderRadius:20, borderWidth:0.5, borderColor:Colors.borderSoft, padding:16, gap:3 },
+  grid: { justifyContent:'center', flexDirection:'row', flexWrap:'wrap', paddingHorizontal:Spacing.lg, gap:10 },
+  widget: { flex:1, minWidth:'40%', maxWidth:'50%', backgroundColor:Colors.card, borderRadius:20, borderWidth:0.5, borderColor:Colors.borderSoft, padding:16, gap:3 },
   wLabel: { fontSize:9, color:Colors.textSecondary, letterSpacing:1, fontWeight:'600', marginBottom:6 },
   wSub: { fontSize:10, color:Colors.textSecondary },
   wTiny: { fontSize:9, color:Colors.textMuted, marginTop:2 },

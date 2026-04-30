@@ -111,16 +111,8 @@ export default function HomeScreen() {
             />
           ))}
         </View>
-        {/* Widgets
-        {dayData && (
-          <WidgetsGrid
-            prayers={prayers}
-            dayData={dayData}
-            location={location}r
-            countdown={countdown}
-            progress={progress}
-          />
-        )}*/}
+        <View style={{ height: 12 }} />
+        {dayData && <WidgetsGrid dayData={dayData} prayers={prayers} location={location} countdown={countdown} progress={progress} />}
         <View style={{ height: 20 }} />
       </ScrollView>
     </SafeAreaView>

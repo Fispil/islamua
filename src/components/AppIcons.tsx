@@ -24,6 +24,7 @@ export const CrescentIcon  = ({size=22,color=Colors.gold}:P) => <MC name="star-c
 export const BellIcon      = ({size=20,color=Colors.gold}:P) => <IO name="notifications" size={size} color={color}/>;
 export const LocationIcon  = ({size=14,color=Colors.goldLight}:P) => <IO name="location" size={size} color={color}/>;
 export const CompassIcon   = ({size=24,color=Colors.gold}:P) => <MC name="compass" size={size} color={color}/>;
+export const QuranTabIcon = ({size=24,color=Colors.gold}:P) => <MC name="book-open-variant" size={size} color={color}/>;
 //@ts-expect-error
 export const KaabaIcon     = ({size=32,color=Colors.gold}:P) => <MC name="kaaba" size={size} color={color}/>;
 export const CalendarIcon  = ({size=24,color=Colors.gold}:P) => <MC name="calendar-today" size={size} color={color}/>;

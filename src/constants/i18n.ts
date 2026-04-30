@@ -144,6 +144,7 @@ export const translations = {
     tabTasbih: 'Tasbih',
     tabCalendar: 'Calendar',
     tabSettings: 'Settings',
+    tabQuran: 'Quran',
 
     // ── Notification content ──────────────────────────────────────
     notifAdhanTitle: 'Prayer',
@@ -287,7 +288,8 @@ export const translations = {
     tabQibla: 'Кібла',
     tabTasbih: 'Тасбіх',
     tabCalendar: 'Календар',
-    tabSettings: 'Налаштування',
+    tabQuran: 'Коран',
+    tabSettings: 'Параметри',
 
     // ── Notification content ──────────────────────────────────────
     notifAdhanTitle: 'Молитва',
